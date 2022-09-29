@@ -1,15 +1,82 @@
 import logo from './logo.svg';
 import './App.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function App() {
+
   
   return (
     <div className="App">
-    <Counter></Counter>
+    {/* <Counter></Counter> */}
+    {/* <LoadUSerDetails></LoadUSerDetails> */}
+    <GetUSers></GetUSers>
     </div>
   );
 }
+
+function GetUSers(){
+  const [users, setUser] = useState([])
+  console.log(users);
+  useEffect(()=>{
+    fetch('https://jsonplaceholder.typicode.com/users')
+    .then(res => res.json())
+    .then(data => setUser(data))
+  },[])
+  return(
+    <div>
+      {
+        users.map(user => <User name = {user.name} website={user.website} email = {user.email} phone={user.phone}></User>)
+      }
+    </div>
+  )
+}
+function User (props){
+  return(
+    <div className='product'>
+      <h1>Name:{props.name} </h1>
+      <p>Email: {props.email}</p>
+      <strong>Phone: {props.phone}</strong>
+      <p>Visit: {props.website}</p>
+    </div>
+  )
+}
+
+/* function LoadUSerDetails(){
+  const [users, setUser] = useState([]);
+  
+  useEffect(()=>{
+    fetch('https://jsonplaceholder.typicode.com/users')
+    .then(res => res.json())
+    .then(data => setUser(data))
+    
+  },[])
+
+  return (
+    <div>
+      <p>Number of Users: {users.length}</p>
+      {
+      users.map(user => <User name= {user.name} email = {user.email} phone= {user.phone}></User>)
+    }
+    </div>
+    
+  )
+}
+function User(props){
+  return(
+    <div className='product'>
+      <h1>Name: {props.name}</h1>
+      <p>Email: {props.email}</p>
+      <strong>Phone: {props.phone}</strong>
+    </div>
+  )
+} */
+
+
+
+
+
+
+
 
 function Counter (){
   /* const increaseValue = () =>{
